@@ -2,17 +2,18 @@
 
 -- NB: This code deliberately avoids relying on non-standard packages
 
-import Control.Monad
-import Data.List
-import System.Environment
-import System.Exit
-import System.IO
+import           Control.Monad
+import           Data.List
+import           System.Environment
+import           System.Exit
+import           System.IO
 
-import Distribution.PackageDescription.Parse (readPackageDescription)
-import Distribution.PackageDescription (packageDescription, testedWith)
-import Distribution.Compiler (CompilerFlavor(..))
-import Distribution.Version
-import Distribution.Text
+import           Distribution.Compiler                 (CompilerFlavor (..))
+import           Distribution.PackageDescription       (packageDescription,
+                                                        testedWith)
+import           Distribution.PackageDescription.Parse (readPackageDescription)
+import           Distribution.Text
+import           Distribution.Version
 
 putStrLnErr :: String -> IO ()
 putStrLnErr m = hPutStrLn stderr ("*ERROR* " ++ m) >> exitFailure
@@ -84,6 +85,12 @@ genTravisFromCabalFile fn xpkgs = do
     putStrLn "  - rm -fv $HOME/.cabal/packages/hackage.haskell.org/00-index.tar"
     putStrLn ""
     putStrLn "matrix:"
+    putStrLn "  # To mark a specific version as being allowed to fail, "
+    putStrLn "  # add its exact compiler string to an array below."
+    putStrLn "  allow_failures: ["
+    putStrLn "    #compiler: \": #GHC 8.4.1\""
+    putStrLn "    #, compiler: \": #GHC 8.2.2\""
+    putStrLn "    ]"
     putStrLn "  include:"
 
     forM_ testedGhcVersions $ \gv -> do

@@ -629,6 +629,12 @@ genTravisFromConfigs (argv,opts) xpkgs isCabalProject config prj@Project { prjPa
         ]
 
     tellStrLn "matrix:"
+    tellStrLn "  # To mark a specific version as being allowed to fail, "
+    tellStrLn "  # add its exact compiler string to an array below."
+    tellStrLn "  allow_failures: ["
+    tellStrLn "    #compiler: \": #GHC 8.4.1\","
+    tellStrLn "    #compiler: \": #GHC 8.2.2\""
+    tellStrLn "    ]"
     tellStrLn "  include:"
 
     let colls = [ (collToGhcVer cid,cid) | cid <- reverse $ optCollections opts ]
